@@ -1,4 +1,9 @@
- {% load static %}
+{% load static %}
+
+{% url 'about' as about_url %}
+{% url 'account_login' as login_url %}
+{% url 'account_signup' as signup_url %}
+{% url 'account_logout' as logout_url %}
 
 
 <!DOCTYPE html>
@@ -10,6 +15,11 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" >
 </head>
 <body>
+    {% block content %}
+    <a href="{% url 'account_login' %}">Login</a>
+    <a href="{% url 'account_signup' %}">Sign Up</a>
+    <a href="{% url 'account_logout' %}">Logout</a>
     <h1>Hello Django From Heroku</h1>
+    {% endblock %}
 </body>
 </html>
