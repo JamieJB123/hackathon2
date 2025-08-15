@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    {% for message in future_messages %}
+    <div class="row">
+        <div class="col-12">
+            <p>
+                {{ message.content }}
+                {{ message.scheduled_at }}
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="container">
+    <form id="messageForm" method="post" class="mt-5 mb-5">
+        {{ message_form | crispy }}
+        {% csrf_token %}
+        <button id="submitButton" type="submit" class="btn btn-dark btn-lg">Submit</button>
+    </form>
+</div>
+
+{% endblock %}
