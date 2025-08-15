@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from django.contrib.auth.decorators import login_required
+
+from django.http import JsonResponse
 from django.utils import timezone
-from django.contrib import messages
 from .models import Message
+
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .forms import MessageForm
+
 
 
 class HomePage(TemplateView):
@@ -13,6 +17,32 @@ class HomePage(TemplateView):
     """
     template_name = 'index.html'
 
+
+
+
+def get_message_api(request):
+    now = timezone.now()
+    message = Message.objects.filter(scheduled_at__lte=now).order_by('-scheduled_at').first()
+    if message:
+        return JsonResponse({
+            'message': {
+                'scheduled_at': message.scheduled_at.strftime('%Y-%m-%d %H:%M'),
+                'content': message.content
+            }
+        })
+    else:
+        return JsonResponse({'message': None})
+
+
+def display(request):
+    now = timezone.now()
+    message = None
+    if request.user.is_authenticated:
+        message = Message.objects.filter(
+            user=request.user,
+            scheduled_at__gt=timezone.now()
+        ).order_by('scheduled_at').first()
+    return render(request, 'message_app/display.html', {'message': message})
 
 @login_required
 def AdminPage(request):

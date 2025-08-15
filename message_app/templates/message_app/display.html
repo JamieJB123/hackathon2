@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Current Message</title>
+</head>
+<body>
+
+<div id="message-container">
+    {% if message %}
+        <h1>{{ message.scheduled_at }}</h1>
+        <p>{{ message.content }}</p>
+    {% else %}
+        <p>Hi Cynthia, no messages yet.</p>
+    {% endif %}
+</div>
+
+<script>
+function fetchMessage() {
+    fetch("{% url 'get_message_api' %}")
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById("message-container");
+            if (data.message) {
+                container.innerHTML = `<h1>${data.message.scheduled_at}</h1>
+                                       <p>${data.message.content}</p>`;
+            } else {
+                container.innerHTML = `<p>Hi Cynthia, no messages yet.</p>`;
+            }
+        })
+        .catch(err => console.error('Error fetching message:', err));
+}
+
+// Poll every 30 seconds
+setInterval(fetchMessage, 30000);
+</script>
+
+</body>
+</html>
