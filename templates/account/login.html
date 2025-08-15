@@ -1,63 +1,60 @@
+
+...existing code...
 {% extends "index.html" %}
 
 {% load i18n %}
 {% load allauth account %}
 {% block head_title %}
-    {% trans "Sign In" %}
+        {% trans "Sign In" %}
 {% endblock head_title %}
 {% block content %}
-
-    {% element h1 %}
-        {% trans "Sign In" %}
-    {% endelement %}
-    {% if not SOCIALACCOUNT_ONLY %}
-        {% setvar link %}
-            <a href="{{ signup_url }}">
-            {% endsetvar %}
-            {% setvar end_link %}
-            </a>
-        {% endsetvar %}
-        {% element p %}
-            {% blocktranslate %}If you have not created an account yet, then please {{ link }}sign up{{ end_link }} first.{% endblocktranslate %}
-        {% endelement %}
-        {% url 'account_login' as login_url %}
-        {% element form form=form method="post" action=login_url tags="entrance,login" %}
-            {% slot body %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+        <h1 class="mb-4 text-center">{% trans "Sign In" %}</h1>
+        {% if not SOCIALACCOUNT_ONLY %}
+            <p class="mb-3 text-center">
+                {% blocktranslate %}If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first.{% endblocktranslate %}
+            </p>
+            {% url 'account_login' as login_url %}
+            <form method="post" action="{{ login_url }}">
                 {% csrf_token %}
-                {% element fields form=form unlabeled=True %}
-                {% endelement %}
+                                                {% for field in form %}
+                                                    {% if field.name == "password" %}
+                                                        {% include "account/snippets/login_password_field.html" with field=field form=form %}
+                                                    {% elif field.name == "remember" %}
+                                                            {# <div class="mb-3">
+                                                                {{ field.label_tag }}
+                                                                {{ field }}
+                                                                {% if field.help_text %}
+                                                                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                                                                {% endif %}
+                                                                {% if field.errors %}
+                                                                    <div class="text-danger">{{ field.errors }}</div>
+                                                                {% endif %}
+                                                            </div> #}
+                                                    {% else %}
+                                                        <div class="mb-3">
+                                                            {{ field.label_tag }}
+                                                            {{ field }}
+                                                            {% if field.help_text %}
+                                                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                                                            {% endif %}
+                                                            {% if field.errors %}
+                                                                <div class="text-danger">{{ field.errors }}</div>
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                <!-- Custom 'Forgot your Password?' link removed. Relying on built-in form link. -->
+...existing code...
                 {{ redirect_field }}
-            {% endslot %}
-            {% slot actions %}
-                {% element button type="submit" tags="prominent,login" %}
-                    {% trans "Sign In" %}
-                {% endelement %}
-            {% endslot %}
-        {% endelement %}
-    {% endif %}
-    {% if LOGIN_BY_CODE_ENABLED or PASSKEY_LOGIN_ENABLED %}
-        {% element hr %}
-        {% endelement %}
-        {% element button_group vertical=True %}
-            {% if PASSKEY_LOGIN_ENABLED %}
-                {% element button type="submit" form="mfa_login" id="passkey_login" tags="prominent,login,outline,primary" %}
-                    {% trans "Sign in with a passkey" %}
-                {% endelement %}
-            {% endif %}
-            {% if LOGIN_BY_CODE_ENABLED %}
-                {% element button href=request_login_code_url tags="prominent,login,outline,primary" %}
-                    {% trans "Send me a sign-in code" %}
-                {% endelement %}
-            {% endif %}
-        {% endelement %}
-    {% endif %}
-    {% if SOCIALACCOUNT_ENABLED %}
-        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-    {% endif %}
+                <button type="submit" class="btn btn-primary w-100">{% trans "Sign In" %}</button>
+            </form>
+        {% endif %}
+        {% if LOGIN_BY_CODE_ENABLED or PASSKEY_LOGIN_ENABLED %}
+            <hr>
+            <!-- Add passkey and code login buttons here if needed, styled with Bootstrap -->
+        {% endif %}
+    </div>
+</div>
 {% endblock content %}
-{% block extra_body %}
-    {{ block.super }}
-    {% if PASSKEY_LOGIN_ENABLED %}
-        {% include "mfa/webauthn/snippets/login_script.html" with button_id="passkey_login" %}
-    {% endif %}
-{% endblock %}
