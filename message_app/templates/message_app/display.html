@@ -1,43 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Current Message</title>
-</head>
-<body>
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
 
 <div id="message-container">
-    {% if show_message %}
+    {% if show_message and message %}
         <h1>{{ message.scheduled_at }}</h1>
-        <p>{{ message.content }}</p>
+        <h2>{{ message.content }}</h2>
     {% else %}
-        <p>Hi Cynthia, no messages yet.</p>
+        <h1>Hi {{ request.user.username }}, no messages yet.</h1>
     {% endif %}
 </div>
 
 <script>
-    
-
-
-
 function fetchMessage() {
     fetch("{% url 'get_message_api' %}")
         .then(response => response.json())
         .then(data => {
+            console.log(data);
+            console.log("Hello from fetchMessage");
             const container = document.getElementById("message-container");
-            if (data.message) {
+            if (data.show_message && data.message) {
                 container.innerHTML = `<h1>${data.message.scheduled_at}</h1>
-                                       <p>${data.message.content}</p>`;
+                                       <h2>${data.message.content}</h2>`;
             } else {
-                container.innerHTML = `<p>Hi Cynthia, no messages yet.</p>`;
+                container.innerHTML = `<h1>Hi ${data.username1}, no messages yet.</h1>`;
             }
         })
         .catch(err => console.error('Error fetching message:', err));
 }
 
 // Poll every 30 seconds
-setInterval(fetchMessage, 30000);
+setInterval(fetchMessage, 30000); // 5 seconds for testing, change to 30000 for 30 seconds
 </script>
 
-</body>
-</html>
+{% endblock %}
