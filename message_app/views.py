@@ -1,6 +1,5 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
-
 from django.http import JsonResponse
 from django.utils import timezone
 from datetime import timedelta
@@ -8,8 +7,8 @@ from .models import Message
 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .models import Message
 from .forms import MessageForm
-
 
 
 class HomePage(TemplateView):
@@ -17,8 +16,6 @@ class HomePage(TemplateView):
     Displays home page"
     """
     template_name = 'index.html'
-
-
 
 
 def get_message_api(request):
@@ -45,6 +42,7 @@ def display(request):
     show_message = 0 <= time_diff.total_seconds() <= 1800  # 1800 seconds = 30 minutes
     return render(request, 'message_app/display.html', {'message': message, 'show_message': show_message})
 
+
 @login_required
 def AdminPage(request):
     future_messages = Message.objects.filter(
@@ -70,6 +68,15 @@ def AdminPage(request):
         "message_form": message_form,
     })
 
+@login_required
+def message_delete(request, pk):
+    message = get_object_or_404(Message, pk=pk, user=request.user)
+    if request.method == "POST":
+        message.delete()
+        messages.success(request, "Message deleted successfully.")
+        return redirect("admin_page")
+    # Optionally, render a confirmation page if not POST
+    return render(request, "message_app/message_confirm_delete.html", {"message": message})
 
 @login_required
 def edit_message(request, message_id):
