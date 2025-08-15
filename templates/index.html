@@ -8,19 +8,67 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Django-Setup</title>
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" >
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
 </head>
-<body>
-    {% block content %}
-    <a href="{% url 'account_login' %}">Login</a>
-    <a href="{% url 'account_signup' %}">Sign Up</a>
-    <a href="{% url 'account_logout' %}">Logout</a>
-    <h1>Hello Django From Heroku</h1>
+
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Header -->
+    <header class="bg-dark text-white py-3 mb-4">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h2 class="m-0">Companion App</h2>
+            <nav>
+                <a href="{{ login_url }}" class="text-white text-decoration-none me-3">Login</a>
+                <a href="{{ signup_url }}" class="text-white text-decoration-none me-3">Sign Up</a>
+                <a href="{{ logout_url }}" class="text-white text-decoration-none">Logout</a>
+                <a href="{{ about_url }}" class="text-white text-decoration-none ms-3">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="flex-fill container d-flex justify-content-center align-items-center">
+        {% block content %}
+        <div class="card shadow p-5 text-center" style="max-width: 1000px; width: 100%; min-height: 400px;">
+            <h1 class="mb-4 display-4">Your Day, Your Way</h1>
+        <p class="mb-3 fs-5">
+            Our smart scheduler keeps your life running smoothly by organizing your daily plans and activities — and making sure you never forget them.
+        </p>
+        <p class="mb-0 fs-5">
+            <strong>
+            Simple to set up, effortless to use, and always right there when you need it, this app turns your schedule into a stress-free experience.
+            </strong>
+        </p>
+        </div>
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <small>&copy; {{ now|date:"Y" }} Companion App</small>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- For Custom JS -->
+    {% block extras %}
     {% endblock %}
 </body>
+
 </html>
