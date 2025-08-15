@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    <form id="messageForm" method="post" class="mt-5 mb-5">
+        {{ message_form | crispy }}
+        {% csrf_token %}
+        <button id="submitButton" type="submit" class="btn btn-dark btn-lg">Update</button>
+    </form>
+</div>
+{% endblock%}

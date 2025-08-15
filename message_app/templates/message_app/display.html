@@ -7,7 +7,7 @@
 <body>
 
 <div id="message-container">
-    {% if message %}
+    {% if show_message %}
         <h1>{{ message.scheduled_at }}</h1>
         <p>{{ message.content }}</p>
     {% else %}
@@ -16,6 +16,10 @@
 </div>
 
 <script>
+    
+
+
+
 function fetchMessage() {
     fetch("{% url 'get_message_api' %}")
         .then(response => response.json())
