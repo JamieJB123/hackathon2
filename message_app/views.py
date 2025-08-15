@@ -1,14 +1,22 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
+
 from django.http import JsonResponse
 from django.utils import timezone
 from .models import Message
+
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .forms import MessageForm
+
+
 
 class HomePage(TemplateView):
     """
     Displays home page"
     """
     template_name = 'index.html'
+
 
 
 
@@ -35,3 +43,30 @@ def display(request):
             scheduled_at__gt=timezone.now()
         ).order_by('scheduled_at').first()
     return render(request, 'message_app/display.html', {'message': message})
+
+@login_required
+def AdminPage(request):
+    future_messages = Message.objects.filter(
+        user=request.user,
+        scheduled_at__gt=timezone.now()
+    ).order_by('scheduled_at')
+
+    if request.method == "POST":
+        message_form = MessageForm(data=request.POST)
+        if message_form.is_valid():
+            message = message_form.save(commit=False)
+            message.user = request.user
+            message.save()
+            messages.add_message(
+                request, messages.SUCCESS,
+                'Comment submitted and awaiting approval'
+            )
+
+    message_form = MessageForm()
+
+    return render(request, 'message_app/admin-page.html', {
+        'future_messages': future_messages,
+        "message_form": message_form,
+    })
+
+

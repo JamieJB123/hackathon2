@@ -11,7 +11,7 @@ class Message(models.Model):
     featured_image = CloudinaryField('image', default="placeholder")
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    scheduled_at = models.DateTimeField(null=True, blank=True)
+    scheduled_at = models.DateTimeField()
     message_type = models.IntegerField(choices=TYPE, default=0)
 
     class Meta:
