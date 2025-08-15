@@ -12,6 +12,10 @@
                 {{ message.scheduled_at }}
             </p>
         </div>
+        <form method="post" action="{% url 'message_delete' message.pk %}">
+        {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
     </div>
     {% endfor %}
 </div>
