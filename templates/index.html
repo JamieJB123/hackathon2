@@ -39,19 +39,22 @@
         </div>
     </header>
 
+
     <!-- Main content -->
-    <main class="flex-fill container d-flex justify-content-center align-items-center">
+    <main class="container mt-4">
         {% block content %}
-        <div class="card shadow p-5 text-center" style="max-width: 1000px; width: 100%; min-height: 400px;">
+    <!-- Hero Image (only on home page) -->
+    <img src="{% static 'css/images/companion.jpg' %}" alt="Hero Image" class="img-fluid w-100 hero-img">
+    <div class="card shadow p-5 text-center mx-auto" style="max-width: 1000px; width: 100%; min-height: 400px;">
             <h1 class="mb-4 display-4">Your Day, Your Way</h1>
-        <p class="mb-3 fs-5">
-            Our smart scheduler keeps your life running smoothly by organizing your daily plans and activities — and making sure you never forget them.
-        </p>
-        <p class="mb-0 fs-5">
-            <strong>
-            Simple to set up, effortless to use, and always right there when you need it, this app turns your schedule into a stress-free experience.
-            </strong>
-        </p>
+            <p class="mb-3 fs-5">
+                Our smart scheduler keeps your life running smoothly by organizing your daily plans and activities — and making sure you never forget them.
+            </p>
+            <p class="mb-0 fs-5">
+                <strong>
+                Simple to set up, effortless to use, and always right there when you need it, this app turns your schedule into a stress-free experience.
+                </strong>
+            </p>
         </div>
         {% endblock %}
     </main>

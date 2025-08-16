@@ -7,3 +7,25 @@ h1 {
 body {
     background-color: #f0f4f8;
 }
+.hero-img {
+  height: 200px;
+  object-fit: contain;
+}
+
+@media (min-width: 765px) {
+  .hero-img {
+    height: 375px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-img {
+    height: 525px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .hero-img {
+    height: 570px;
+  }
+}
