@@ -39,6 +39,8 @@
                         <li><a href="{% url 'home' %}" class="text-white text-decoration-none me-3">Home</a></li>
                         {% if user.is_authenticated %}
                         <li><a href="{{ logout_url }}" class="text-white text-decoration-none me-3">Logout</a></li>
+                        <li><a href="{% url 'display' %}" class="text-white text-decoration-none me-3">Messages</a></li>
+                        <li><a href="{% url 'admin_page' %}" class="text-white text-decoration-none me-3">Admin</a></li>
                         {% else %}
                         <li><a href="{{ login_url }}" class="text-white text-decoration-none me-3">Login</a></li>
                         <li><a href="{{ signup_url }}" class="text-white text-decoration-none me-3">Sign Up</a></li>
