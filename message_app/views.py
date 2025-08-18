@@ -20,16 +20,24 @@ class HomePage(TemplateView):
 
 def get_message_api(request):
     now = timezone.now()
-    message = Message.objects.filter(scheduled_at__lte=now).order_by('-scheduled_at').first()
+    message = Message.objects.filter(
+        user=request.user,
+        scheduled_at__gt=timezone.now()).order_by('scheduled_at').first()
     if message:
+        time_diff = message.scheduled_at - now
+        if message.message_type == 0:
+            show_message = 0 <= time_diff.total_seconds() <= 120
+        else:
+            show_message = 0 <= time_diff.total_seconds() <= 1800  # 1800 seconds = 30 minutes
         return JsonResponse({
             'message': {
                 'scheduled_at': message.scheduled_at.strftime('%Y-%m-%d %H:%M'),
                 'content': message.content
-            }
+            },
+            'show_message': show_message,
         })
     else:
-        return JsonResponse({'message': None})
+        return JsonResponse({'message': None, 'show_message': False, 'username1': request.user.username})
 
 
 def display(request):
@@ -38,9 +46,15 @@ def display(request):
         user=request.user,
         scheduled_at__gt=timezone.now()
     ).order_by('scheduled_at').first()
-    time_diff = message.scheduled_at - now
-    show_message = 0 <= time_diff.total_seconds() <= 1800  # 1800 seconds = 30 minutes
-    return render(request, 'message_app/display.html', {'message': message, 'show_message': show_message})
+    if not message:
+        return render(request, 'message_app/display.html', {'message': None, 'show_message': False})
+    else:
+        time_diff = message.scheduled_at - now
+        if message.message_type == 0:
+            show_message = 0 <= time_diff.total_seconds() <= 60 #1 minute
+        else:
+            show_message = 0 <= time_diff.total_seconds() <= 1800  # 1800 seconds = 30 minutes
+        return render(request, 'message_app/display.html', {'message': message, 'show_message': show_message})
 
 
 @login_required
@@ -58,7 +72,7 @@ def AdminPage(request):
             message.save()
             messages.add_message(
                 request, messages.SUCCESS,
-                'Comment submitted and awaiting approval'
+                'Message created successfully'
             )
 
     message_form = MessageForm()
