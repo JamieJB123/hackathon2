@@ -20,7 +20,7 @@ Working together on this project via Discord was a highly rewarding experience f
 
 - [Features](#features)
 - [Responsive Design](#responsive-design)
--- [Learning Outcomes & Reflections](#learning-outcomes--reflections)
+- [Learning Outcomes & Reflections](#learning-outcomes--reflections)
    - [Front-End Design](#front-end-design)
    - [Database](#database)
    - [Agile Methodology](#agile-methodology)
