@@ -33,6 +33,7 @@ def get_message_api(request):
                 'content': message.content
             },
             'show_message': show_message,
+            'username1': request.user.username
         })
     else:
         return JsonResponse({'message': None, 'show_message': False, 'username1': request.user.username})
