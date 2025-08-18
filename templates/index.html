@@ -79,6 +79,17 @@
                     <a class="btn btn-dark" href="{% url 'admin_page' %}" role="button">Message Admin</a>
                 </div>
             </div>
+            {% else %}
+            <div class="row d-flex">
+                <div class="col-12 col-lg-6 mt-3">
+                    <p>Click here to Sign Up</p>
+                    <a class="btn btn-dark" href="{{ signup_url }}" role="button">Sign Up</a>
+                </div>
+                <div class="col-12 col-lg-6 mt-3">
+                    <p>Click here to Log In</p>
+                    <a class="btn btn-dark" href="{{ login_url }}" role="button">Log In</a>
+                </div>
+            </div>
             {% endif %}
         </div>
         {% endblock %}
