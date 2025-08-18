@@ -1,5 +1,12 @@
 {% extends "index.html" %}
 {% load static %}
+
+{% block body_class %}display-page{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'message_app/css/display.css' %}">
+{% endblock %}
+
 {% block content %}
 
 <div class="container flex-grow-1 d-flex justify-content-center align-items-center">
@@ -16,6 +23,7 @@
         {% endif %}
     </div>
 </div>
+
 
 <script>
 function fetchMessage() {
@@ -38,5 +46,6 @@ function fetchMessage() {
 // Poll every 30 seconds
 setInterval(fetchMessage, 30000); // 5 seconds for testing, change to 30000 for 30 seconds
 </script>
+
 
 {% endblock %}
