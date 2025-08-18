@@ -1,5 +1,12 @@
 {% extends "index.html" %}
 {% load static %}
+
+{% block body_class %}display-page{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'message_app/css/display.css' %}">
+{% endblock %}
+
 {% block content %}
 
 <div id="message-container">
@@ -10,6 +17,7 @@
         <h1>Hi {{ request.user.username }}, no messages yet.</h1>
     {% endif %}
 </div>
+
 
 <script>
 function fetchMessage() {
@@ -33,5 +41,6 @@ function fetchMessage() {
 setInterval(fetchMessage, 30000); // 5 seconds for testing, change to 30000 for 30 seconds
 
 </script>
+
 
 {% endblock %}
