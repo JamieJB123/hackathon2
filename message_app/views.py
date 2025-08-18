@@ -26,7 +26,7 @@ def get_message_api(request):
     if message:
         time_diff = message.scheduled_at - now
         if message.message_type == 0:
-            show_message = 0 <= time_diff.total_seconds() <= 60
+            show_message = 0 <= time_diff.total_seconds() <= 120
         else:
             show_message = 0 <= time_diff.total_seconds() <= 1800  # 1800 seconds = 30 minutes
         return JsonResponse({

@@ -18,10 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('', include('message_app.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('messages/', include('message_app.urls')),
     path('summernote/', include('django_summernote.urls')),
-    path('', include('message_app.urls')),
 ]
 
