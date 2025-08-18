@@ -52,6 +52,7 @@ def get_message_api(request):
         scheduled_at__gt=timezone.now()).order_by('scheduled_at').first()
     if message:
         time_diff = message.scheduled_at - now
+        minutes = time_diff.total_seconds() // 60
         if message.message_type == 0:
             show_message = 0 <= time_diff.total_seconds() <= 120
         else:
@@ -62,7 +63,8 @@ def get_message_api(request):
                 'content': message.content
             },
             'show_message': show_message,
-            'username1': request.user.username
+            'username1': request.user.username,
+            'minutes': minutes if show_message else None
         })
     else:
         return JsonResponse({'message': None, 'show_message': False, 'username1': request.user.username})
