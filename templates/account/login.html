@@ -1,57 +1,55 @@
-
 {% extends "index.html" %}
 
 {% load i18n %}
 {% load allauth account %}
 {% block head_title %}
-        {% trans "Sign In" %}
+{% trans "Sign In" %}
 {% endblock head_title %}
 {% block content %}
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
     <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
         <h1 class="mb-4 text-center">{% trans "Sign In" %}</h1>
         {% if not SOCIALACCOUNT_ONLY %}
-            <p class="mb-3 text-center">
-                {% blocktranslate %}If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first.{% endblocktranslate %}
-            </p>
-            {% url 'account_login' as login_url %}
-            <form method="post" action="{{ login_url }}">
-                {% csrf_token %}
-                                                {% for field in form %}
-                                                    {% if field.name == "password" %}
-                                                        {% include "account/snippets/login_password_field.html" with field=field form=form %}
-                                                    {% elif field.name == "remember" %}
-                                                            <div class="mb-3">
-                                                                {{ field.label_tag }}
-                                                                {{ field }}
-                                                                {% if field.help_text %}
-                                                                    <small class="form-text text-muted">{{ field.help_text }}</small>
-                                                                {% endif %}
-                                                                {% if field.errors %}
-                                                                    <div class="text-danger">{{ field.errors }}</div>
-                                                                {% endif %}
-                                                            </div> 
-                                                    {% else %}
-                                                        <div class="mb-3">
-                                                            {{ field.label_tag }}
-                                                            {{ field }}
-                                                            {% if field.help_text %}
-                                                                <small class="form-text text-muted">{{ field.help_text }}</small>
-                                                            {% endif %}
-                                                            {% if field.errors %}
-                                                                <div class="text-danger">{{ field.errors }}</div>
-                                                            {% endif %}
-                                                        </div>
-                                                    {% endif %}
-                                                {% endfor %}
-                                <!-- Custom 'Forgot your Password?' link removed. Relying on built-in form link. -->
-                {{ redirect_field }}
-                <button type="submit" class="btn btn-primary w-100">{% trans "Sign In" %}</button>
-            </form>
+        <p class="mb-3 text-center">
+            {% blocktranslate %}If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first.{% endblocktranslate %}
+        </p>
+        {% url 'account_login' as login_url %}
+        <form method="post" action="{{ login_url }}">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.name == "password" %}
+                    {% include "account/snippets/login_password_field.html" with field=field form=form %}
+                {% elif field.name == "remember" %}
+                    <div class="mb-3">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="text-danger">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="mb-3">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.help_text and field.name != "password" %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="text-danger">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            {{ redirect_field }}
+            <button type="submit" class="btn btn-primary w-100">{% trans "Sign In" %}</button>
+        </form>
         {% endif %}
         {% if LOGIN_BY_CODE_ENABLED or PASSKEY_LOGIN_ENABLED %}
-            <hr>
-            <!-- Add passkey and code login buttons here if needed, styled with Bootstrap -->
+        <hr>
+        <!-- Add passkey and code login buttons here if needed, styled with Bootstrap -->
         {% endif %}
     </div>
 </div>
