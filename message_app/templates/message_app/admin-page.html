@@ -4,29 +4,38 @@
 {% block content %}
 
 <div class="container">
-    {% for message in future_messages %}
     <div class="row">
-        <div class="col-12">
-            <p>
-                {{ message.content }}
-                {{ message.scheduled_at }}
-            </p>
-            <a href="{% url 'edit_message' message.id %}" class="btn btn-primary">Edit</a>
+        <div class="col-12 col-md-6 pe-5">
+            <div class="row">
+                <h1 class="my-4">Future Messages:</h1>
+                {% for message in future_messages %}
+                <div class="message-container p-3 border rounded bg-light mb-3">
+                    <p>
+                        {{ message.content }}
+                        {{ message.scheduled_at }}
+                    </p>
+                    <div class="d-flex justify-content-start">
+                        <a href="{% url 'edit_message' message.id %}" class="btn btn-primary mx-2">Edit</a>
+                        <form method="post" action="{% url 'message_delete' message.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="mx-2 btn btn-warning">Delete</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-        <form method="post" action="{% url 'message_delete' message.pk %}">
-        {% csrf_token %}
-            <button type="submit">Delete</button>
-        </form>
+        <div class="col-12 col-md-6">
+            <h2 class="mt-4">Add New Message</h2>
+            <form id="messageForm" method="post" class="mt-5 mb-5">
+                {{ message_form | crispy }}
+                {% csrf_token %}
+                <button id="submitButton" type="submit" class="btn btn-dark btn-lg">Submit</button>
+            </form>
+        </div>
     </div>
-    {% endfor %}
 </div>
 
-<div class="container">
-    <form id="messageForm" method="post" class="mt-5 mb-5">
-        {{ message_form | crispy }}
-        {% csrf_token %}
-        <button id="submitButton" type="submit" class="btn btn-dark btn-lg">Submit</button>
-    </form>
-</div>
+
 
 {% endblock %}
