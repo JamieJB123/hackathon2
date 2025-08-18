@@ -11,10 +11,10 @@ h1 {
     min-height: 100vh;
 }
 
-#message-container {
+#message-container > * {
     padding: 2rem;
     text-align: center;
-    color: darkgrey;
+    color: white;
     flex: 1;
 }
 

@@ -2,11 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
 from django.http import JsonResponse
 from django.utils import timezone
-from datetime import timedelta
-from .models import Message
-
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from datetime import timedelta
 from .models import Message
 from .forms import MessageForm
 
@@ -35,6 +33,7 @@ def get_message_api(request):
                 'content': message.content
             },
             'show_message': show_message,
+            'username1': request.user.username
         })
     else:
         return JsonResponse({'message': None, 'show_message': False, 'username1': request.user.username})

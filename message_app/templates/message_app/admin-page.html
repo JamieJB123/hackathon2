@@ -4,29 +4,61 @@
 {% block content %}
 
 <div class="container">
-    {% for message in future_messages %}
     <div class="row">
-        <div class="col-12">
-            <p>
-                {{ message.content }}
-                {{ message.scheduled_at }}
-            </p>
-            <a href="{% url 'edit_message' message.id %}" class="btn btn-primary">Edit</a>
+        <div class="col-12 col-md-6 pe-5">
+            <div class="row">
+                <h1 class="my-4">Future Messages:</h1>
+                {% for message in future_messages %}
+                <div class="message-container p-3 border rounded bg-light mb-3">
+                    <p>
+                        {{ message.content }}
+                        {{ message.scheduled_at }}
+                    </p>
+                    <div class="d-flex justify-content-start">
+                        <a href="{% url 'edit_message' message.id %}" class="btn btn-primary mx-2">Edit</a>
+                        
+                        <!-- Delete Button triggers modal -->
+                        <button type="button" class="mx-2 btn btn-warning" data-bs-toggle="modal" data-bs-target="#deleteModal{{ message.pk }}">
+                            Delete
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal{{ message.pk }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ message.pk }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel{{ message.pk }}">Confirm Deletion</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this message?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form method="post" action="{% url 'message_delete' message.pk %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-        <form method="post" action="{% url 'message_delete' message.pk %}">
-        {% csrf_token %}
-            <button type="submit">Delete</button>
-        </form>
+        <div class="col-12 col-md-6">
+            <h2 class="mt-4">Add New Message</h2>
+            <form id="messageForm" method="post" class="mt-5 mb-5">
+                {{ message_form | crispy }}
+                {% csrf_token %}
+                <button id="submitButton" type="submit" class="btn btn-dark btn-lg">Submit</button>
+            </form>
+        </div>
     </div>
-    {% endfor %}
 </div>
 
-<div class="container">
-    <form id="messageForm" method="post" class="mt-5 mb-5">
-        {{ message_form | crispy }}
-        {% csrf_token %}
-        <button id="submitButton" type="submit" class="btn btn-dark btn-lg">Submit</button>
-    </form>
-</div>
+
 
 {% endblock %}
