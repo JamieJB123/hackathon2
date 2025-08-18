@@ -68,6 +68,18 @@
                 Simple to set up, effortless to use, and always right there when you need it, this app turns your schedule into a stress-free experience.
                 </strong>
             </p>
+            {% if user.is_authenticated %}
+            <div class="row d-flex">
+                <div class="col-12 col-lg-6 mt-3">
+                    <p>Click here to view the message display</p>
+                    <a class="btn btn-dark" href="{% url 'display' %}" role="button">Message Display</a>
+                </div>
+                <div class="col-12 col-lg-6 mt-3">
+                    <p>Click here to review your messages</p>
+                    <a class="btn btn-dark" href="{% url 'admin_page' %}" role="button">Message Admin</a>
+                </div>
+            </div>
+            {% endif %}
         </div>
         {% endblock %}
     </main>
