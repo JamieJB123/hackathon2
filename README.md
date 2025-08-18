@@ -33,7 +33,6 @@ Working together on this project via Discord was a highly rewarding experience f
    - [Object-Based Software Concepts and Custom Data Models](#object-based-software-concepts-and-custom-data-models)
    - [Leveraging AI Tools in Software Development](#leveraging-ai-tools-in-software-development)
 - [Setup Instructions](#setup-instructions)
-(#manual--javascript-testing)
 - [License](#license)
 - [Credits](#credits)
 
