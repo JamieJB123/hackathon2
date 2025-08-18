@@ -48,10 +48,10 @@ Working together on this project via Discord was a highly rewarding experience f
 
 ## Responsive Design
 
-![Mobile view](static/images/mobile_view.png)
+![Mobile view](static/images/mobile_view.jpg)
 *Mobile layout showing responsive navigation and content.*
 
-![Desktop view](static/images/desktop_view.png)
+![Desktop view](static/images/desktop_view.jpg)
 *Desktop layout with expanded navigation and content.*
 
 
