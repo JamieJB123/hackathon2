@@ -16,7 +16,13 @@ import dj_database_url
 
 if os.path.isfile("env.py"):
    import env
-
+else:
+    json_str = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+    if json_str:
+        credentials_path = "/tmp/google-credentials.json"
+        with open(credentials_path, "w") as f:
+            f.write(json_str)
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
