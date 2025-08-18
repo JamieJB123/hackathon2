@@ -7,6 +7,10 @@
         {% if show_message and message %}
             <h1>{{ message.scheduled_at }}</h1>
             <h2>{{ message.content }}</h2>
+            <audio id="tts-audio" controls>
+                <source src="{% url 'text_to_speech' %}"  type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
         {% else %}
             <h1>Hi {{ request.user.username }}, no messages yet.</h1>
         {% endif %}
@@ -33,7 +37,6 @@ function fetchMessage() {
 
 // Poll every 30 seconds
 setInterval(fetchMessage, 30000); // 5 seconds for testing, change to 30000 for 30 seconds
-
 </script>
 
 {% endblock %}

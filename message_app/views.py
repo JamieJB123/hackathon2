@@ -1,12 +1,41 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from google.cloud import texttospeech
+import os
 from datetime import timedelta
 from .models import Message
 from .forms import MessageForm
+
+
+def text_to_speech_view(request):
+    message = Message.objects.filter(
+        user=request.user,
+        scheduled_at__gt=timezone.now()).order_by('scheduled_at').first()
+    text = message.content
+
+    # Set credentials (if not set globally)
+    os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+
+    client = texttospeech.TextToSpeechClient()
+    synthesis_input = texttospeech.SynthesisInput(text=text)
+    voice = texttospeech.VoiceSelectionParams(
+        language_code="en-US",
+        ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
+    )
+    audio_config = texttospeech.AudioConfig(audio_encoding=texttospeech.AudioEncoding.MP3)
+
+    response = client.synthesize_speech(
+        input=synthesis_input,
+        voice=voice,
+        audio_config=audio_config
+    )
+
+    # Return MP3 as HTTP response
+    return HttpResponse(response.audio_content, content_type='audio/mpeg')
 
 
 class HomePage(TemplateView):
