@@ -1,6 +1,8 @@
 {% extends "index.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% block body_class %}{% endblock %}
+
 {% block content %}
 
 <div class="container">
@@ -16,7 +18,7 @@
                     </p>
                     <div class="d-flex justify-content-start">
                         <a href="{% url 'edit_message' message.id %}" class="btn btn-primary mx-2">Edit</a>
-                        
+
                         <!-- Delete Button triggers modal -->
                         <button type="button" class="mx-2 btn btn-warning" data-bs-toggle="modal" data-bs-target="#deleteModal{{ message.pk }}">
                             Delete
