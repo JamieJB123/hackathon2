@@ -31,9 +31,12 @@
         <div class="container d-flex justify-content-between align-items-center">
             <h2 class="m-0">Companion App</h2>
             <nav>
+                {% if user.is_authenticated %}
+                <a href="{{ logout_url }}" class="text-white text-decoration-none">Logout</a>
+                {% else %}
                 <a href="{{ login_url }}" class="text-white text-decoration-none me-3">Login</a>
                 <a href="{{ signup_url }}" class="text-white text-decoration-none me-3">Sign Up</a>
-                <a href="{{ logout_url }}" class="text-white text-decoration-none">Logout</a>
+                {% endif %}
                 <a href="{{ about_url }}" class="text-white text-decoration-none ms-3">About</a>
             </nav>
         </div>
