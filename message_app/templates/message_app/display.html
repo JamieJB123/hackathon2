@@ -2,13 +2,15 @@
 {% load static %}
 {% block content %}
 
-<div id="message-container">
-    {% if show_message and message %}
-        <h1>{{ message.scheduled_at }}</h1>
-        <h2>{{ message.content }}</h2>
-    {% else %}
-        <h1>Hi {{ request.user.username }}, no messages yet.</h1>
-    {% endif %}
+<div class="container flex-grow-1 d-flex justify-content-center align-items-center">
+    <div id="message-container">
+        {% if show_message and message %}
+            <h1>{{ message.scheduled_at }}</h1>
+            <h2>{{ message.content }}</h2>
+        {% else %}
+            <h1>Hi {{ request.user.username }}, no messages yet.</h1>
+        {% endif %}
+    </div>
 </div>
 
 <script>

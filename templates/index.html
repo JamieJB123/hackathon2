@@ -54,11 +54,11 @@
 
 
     <!-- Main content -->
-    <main class="container flex-grow-1 mt-4">
+    <main class="container flex-grow-1 mt-4 d-flex flex-column">
         {% block content %}
     <!-- Hero Image (only on home page) -->
     <img src="{% static 'css/images/companion.jpg' %}" alt="Hero Image" class="img-fluid w-100 hero-img">
-    <div class="card shadow p-5 text-center mx-auto" style="max-width: 1000px; width: 100%; min-height: 400px;">
+    <div class="card shadow p-5 text-center mx-auto mt-3" style="max-width: 1000px; width: 100%; min-height: 400px;">
             <h1 class="mb-4 display-4">Your Day, Your Way</h1>
             <p class="mb-3 fs-5">
                 Our smart scheduler keeps your life running smoothly by organizing your daily plans and activities — and making sure you never forget them.
