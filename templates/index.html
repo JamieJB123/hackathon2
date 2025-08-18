@@ -39,6 +39,8 @@
                         <li><a href="{% url 'home' %}" class="text-white text-decoration-none me-3">Home</a></li>
                         {% if user.is_authenticated %}
                         <li><a href="{{ logout_url }}" class="text-white text-decoration-none me-3">Logout</a></li>
+                        <li><a href="{% url 'display' %}" class="text-white text-decoration-none me-3">Messages</a></li>
+                        <li><a href="{% url 'admin_page' %}" class="text-white text-decoration-none me-3">Admin</a></li>
                         {% else %}
                         <li><a href="{{ login_url }}" class="text-white text-decoration-none me-3">Login</a></li>
                         <li><a href="{{ signup_url }}" class="text-white text-decoration-none me-3">Sign Up</a></li>
@@ -52,7 +54,7 @@
 
 
     <!-- Main content -->
-    <main class="container mt-4">
+    <main class="container flex-grow-1 mt-4">
         {% block content %}
     <!-- Hero Image (only on home page) -->
     <img src="{% static 'css/images/companion.jpg' %}" alt="Hero Image" class="img-fluid w-100 hero-img">
@@ -66,6 +68,18 @@
                 Simple to set up, effortless to use, and always right there when you need it, this app turns your schedule into a stress-free experience.
                 </strong>
             </p>
+            {% if user.is_authenticated %}
+            <div class="row d-flex">
+                <div class="col-12 col-lg-6 mt-3">
+                    <p>Click here to view the message display</p>
+                    <a class="btn btn-dark" href="{% url 'display' %}" role="button">Message Display</a>
+                </div>
+                <div class="col-12 col-lg-6 mt-3">
+                    <p>Click here to review your messages</p>
+                    <a class="btn btn-dark" href="{% url 'admin_page' %}" role="button">Message Admin</a>
+                </div>
+            </div>
+            {% endif %}
         </div>
         {% endblock %}
     </main>
