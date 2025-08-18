@@ -1,5 +1,7 @@
 h1 {
-    color: red;
+    color: #7116cdc6;
+    font-weight: 700;
+    font-size: calc(1.475rem + 2.7vw);
 }
 
 /* Display Page */
@@ -8,14 +10,24 @@ h1 {
     background-image: url("../images/display_default.jpg");
     background-size: cover;
     background-position: center;
-    min-height: 100vh;
+    min-height: 70vh;
+    border-radius: 20px;
 }
-
+.display-home {
+    background-image: url("../images/companion.jpg");
+    background-size: cover;
+    background-position: center;
+    min-height: 70vh;
+    border-radius: 20px;
+}
+.shadow {
+    background-color: rgba(255, 255, 255, 0.68);
+    border-radius: 20px;
+}
 #message-container > * {
     padding: 2rem;
     text-align: center;
     color: white;
-    flex: 1;
 }
 
 /* Index Page */
