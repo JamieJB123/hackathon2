@@ -1,11 +1,19 @@
-h1 {
-    color: #7116cdc6;
+#admin-title {
+    color: #C891E6;
+    font-weight: 700;
+    font-size: calc(1.475rem + 2.7vw);
+    text-decoration: underline;
+}
+#index-title {
+    color: #025BA8;
     font-weight: 700;
     font-size: calc(1.475rem + 2.7vw);
 }
 
 /* Display Page */
-
+#body {
+  background-color: #2A72D3
+}
 .display-page {
     background-image: url("../images/display_default.jpg");
     background-size: cover;
