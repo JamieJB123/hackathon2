@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from google.cloud import texttospeech
 import os
-from datetime import timedelta
 from .models import Message
 from .forms import MessageForm
 
