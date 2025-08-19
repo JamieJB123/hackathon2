@@ -24,7 +24,7 @@
 </head>
 
 
-<body class="d-flex flex-column min-vh-100">
+<body id="body" class="d-flex flex-column min-vh-100">
 
     <!-- Header -->
     <header class="bg-dark text-white py-3 mb-4">
@@ -54,12 +54,12 @@
 
 
     <!-- Main content -->
-    <main class="{% block body_class %}display-home{% endblock %} container flex-grow-1 mt-4 d-flex flex-column justify-content-center">
+    <main id="main" class="{% block body_class %}display-home{% endblock %} container flex-grow-1 mt-4 d-flex flex-column justify-content-center">
         {% block content %}
     <!-- Hero Image (only on home page) -->
     {% comment %} <img src="{% static 'images/companion.jpg' %}" alt="Hero Image" class="img-fluid w-100 hero-img"> {% endcomment %}
     <div class="shadow p-5 text-center mx-auto mt-3" style="max-width: 1000px; width: 100%; min-height: 400px;">
-            <h1 class="mb-4">Your Day, Your Way</h1>
+            <h1 id="index-title" class="mb-4">Your Day, Your Way</h1>
             <p class="mb-3 fs-5">
                 Our smart scheduler keeps your life running smoothly by organizing your daily plans and activities — and making sure you never forget them.
             </p>
