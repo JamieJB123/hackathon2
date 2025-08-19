@@ -1,5 +1,6 @@
 # Companion app
 
+![Website Mockup](static/images/website-mockup.png)
 
 <a href="https://hackathon2-helper-182de8322106.herokuapp.com/" target="_blank">Visit Companion App</a>
 
@@ -10,10 +11,10 @@ Working together on this project via Discord was a highly rewarding experience f
 # Team Awesome
 
 - [Jamie](https://github.com/JamieJB123) - Lead
-- [David Noble](https://github.com/JamieJB123)
-- [Marc](https://github.com/JamieJB123) 
+- [David Noble](https://github.com/dav-noble)
+- [Marc](https://github.com/msaunders4-bc)
 - [Marijonas](https://github.com/Marso22)
-- [AlexM](https://github.com/JamieJB123)
+- [AlexM](https://github.com/Alex-McAlpine)
 
 
 ## Table of Contents
@@ -40,8 +41,16 @@ Working together on this project via Discord was a highly rewarding experience f
 ## Features
 
 - User registration, login and logout (via Django Allauth)
-- Page with displayed message content to user and form to create message.
-- Page with displayed message form to create message.
+- Message display page: Messages are displayed differently depending on conditional logic.
+   - If the message is a 'task notification' (e.g. doctor's appointment) it will display 30 minutes before the scheduled at time. It will also have a 'count down' until the scheduled time.
+   - If the message is a 'friendly message' (e.g. Good morning!) it will appear 2 minutes before the scheduled time and it will not have a count down.
+   - If there is a message to be displayed, there will also be an 'audio' element with the message converted using Google's Text-to-Speech API.
+   - If there is not a message to display, a default message will be displayed on the screen ("Hello <user>, no message to display")
+- There is a JavaScript script which functions like an API call every 30 seconds to check whether the message display needs to change. This ensures that messages are updated continuously without the user continuously needing to refresh the page.
+- Admin Message Display:
+   - There is a user admin panel in which they can create new messages, attach an image to the message, and determine which 'type' of message it is.
+   - The admin panel will also display all future messages which have been scheduled.
+   - From the admin page user's can edit or delete any future messages which they have created.
 - Bootstrap toast notifications for message edit/delete
 - Responsive design for desktop and mobile
 - Django admin for message management
@@ -78,10 +87,10 @@ The README is well-organized, detailing the UX process, design rationale, and fi
 A well-organised and consistent database schema was developed using Django’s ORM. The data model includes clearly defined table for users, message contents, its creation and update date and time, scheduled date and time, with relationships established through foreign keys. Consistent use of data types and constraints ensures data integrity, and Django migrations were used to manage schema changes and maintain version control.
 
 #### CRUD Functionality
-The application provides user-friendly interfaces for creating, reading, updating, and deleting (CRUD) records, primarily through the Django admin and custom forms. 
+The application provides user-friendly interfaces for creating, reading, updating, and deleting (CRUD) records, primarily through the Django admin and custom forms.
 
 #### User Notifications
-Users receive clear and concise notifications for relevant data changes. 
+Users receive clear and concise notifications for relevant data changes.
 
 #### Forms and Validation
 Forms are implemented for creating and editing models, with robust backend validation to ensure data quality. The forms feature clear labels, accessible design, and informative error messages for invalid submissions, enhancing usability and accessibility for all users.
@@ -135,13 +144,21 @@ AI-driven recommendations contributed to performance and user experience improve
 #### Reflect on AI’s Role in the Development Process and Its Impact on Workflow
 AI tools significantly enhanced workflow efficiency, enabling rapid prototyping, streamlined debugging. The development process was more productive and focused on outcomes, with less time spent on repetitive coding tasks.
 
+## Bugs:
+
+- Text-to-speech:
+   - Initially we wanted the text-to-speech conversion to be automatic. We wanted the audio to play automatically when a user navigated to the message-display page. We also wanted this audio to play periodically as the time counted down towards the scheduled time.
+   - However, when we tried to implement this we discovered that this is impossible because modern web-browsers block this behaviour for accessibility and user-experience reasons. This was useful to discover. This sort of application is not best suited to a web-application.
+   - There are also a few issues with the text-to-speech currently which we were unable to resolve due to time-constraints. Currently, the text-to-speech functionality is only called when the user navigates to the message-display page or when they refresh the page. Therefore, the audio does not update with the text (because it is not updated with the javascript API call).
+   - There is also another issue with the text-to-speech. Currently, the audio for the next scheduled message is available irrespective of how long before the 'scheduled-at' time it is. Therefore, the audio can be out of sync with the text (as the text is conditionally displayed depending on how long before the scheduled-time it is).
+
 
 ## Setup Instructions
 
 1. **Main repository:**
-   
+
    https://github.com/JamieJB123/hackathon2
-   
+
 
 2. **Install dependencies:**
    ```bash
@@ -183,6 +200,8 @@ MIT License
 - [Cloudinary](https://cloudinary.com/) — Media storage and management.
 - [W3C Markup Validation Service](https://validator.w3.org/) — Used for HTML/CSS validation.
 - [Invideo AI](https://invideo.io/) — AI-powered image & video creation and editing tool.
+- [Google Text-to-Speech API](https://cloud.google.com/text-to-speech/docs/reference/rest)
+- Thanks to YouTuber Jie Jenn for a super useful [YouTube Tutorial](https://www.youtube.com/watch?v=GVPWz-nhJhg&list=PL4kPG-rWg6f_HHelBUs27x1EY5rx-HVnH&index=5) on using Google text-to-speech API.
 - Any additional libraries, tutorials, or resources used in development.
 
 
