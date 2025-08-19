@@ -53,6 +53,7 @@ def get_message_api(request):
     if message:
         time_diff = message.scheduled_at - now
         minutes = time_diff.total_seconds() // 60
+        message_type = message.message_type
         if message.message_type == 0:
             show_message = 0 <= time_diff.total_seconds() <= 120
         else:
@@ -64,7 +65,8 @@ def get_message_api(request):
             },
             'show_message': show_message,
             'username1': request.user.username,
-            'minutes': minutes if show_message else None
+            'minutes': minutes if show_message else None,
+            'message_type': message_type
         })
     else:
         return JsonResponse({'message': None, 'show_message': False, 'username1': request.user.username})

@@ -1,7 +1,8 @@
 #admin-title {
-    color: #C891E6;
+    /* color: #C891E6; */
+    color: rgba(195, 195, 195, 0.85);
     font-weight: 700;
-    font-size: calc(1.475rem + 2.7vw);
+    font-size: calc(1.3rem + 2.7vw);
     text-decoration: underline;
 }
 #index-title {
@@ -12,7 +13,7 @@
 
 /* Display Page */
 #body {
-  background-color: #2A72D3
+  background-image: linear-gradient(135deg, #2A72D3, #F7A3EE);
 }
 .display-page {
     background-image: url("../images/display_default.jpg");

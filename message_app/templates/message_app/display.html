@@ -33,8 +33,14 @@ function fetchMessage() {
             console.log("Hello from fetchMessage");
             const container = document.getElementById("message-container");
             if (data.show_message && data.message) {
-                container.innerHTML = `<h1>${data.message.scheduled_at}</h1>
-                                       <h2>${data.message.content} in ${data.minutes} minutes</h2>`;
+                if (data.message_type === 1) {
+                    container.innerHTML = `<h1>${data.message.scheduled_at}</h1>
+                                        <h2>${data.message.content} in ${data.minutes} minutes</h2>`;
+                }
+                else {
+                    container.innerHTML = `<h1>${data.message.scheduled_at}</h1>
+                                        <h2>${data.message.content}</h2>`;
+                }
             } else {
                 container.innerHTML = `<h1>Hi ${data.username1}, no messages yet.</h1>`;
             }
