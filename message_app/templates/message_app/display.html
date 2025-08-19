@@ -15,10 +15,12 @@
                 <h1>Hi {{ request.user.username }}, no messages yet.</h1>
             {% endif %}
         </div>
+        {% if show_message and message %}
         <audio id="tts-audio" controls>
                 <source src="{% url 'text_to_speech' %}"  type="audio/mpeg">
                 Your browser does not support the audio element.
         </audio>
+        {% endif %}
     </div>
 </div>
 
